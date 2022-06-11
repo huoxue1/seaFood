@@ -1,0 +1,7 @@
+/target
+/logs
+/.idea
+/.classpath
+*.eml
+/seaFood.userlibraries
+/.settings
