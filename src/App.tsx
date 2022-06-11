@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect} from 'react';
 import './App.css';
+import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
+import Login from "./compent/login";
+import Home from "./compent/home";
+import Register from "./compent/register";
+import Api from "./utils/api"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+function App(props:any,states:any) {
+
+
+  let a = 1;
+  let navigate = useNavigate();
+  let location = useLocation();
+  useEffect(()=>{
+    Api.check_login().then(r =>{
+      if (r.code !== 200) {
+        navigate("/login")
+      } else {
+        navigate("/home")
+      }
+    })
+  },[a])
+
+  return <>
+    <Routes>
+      <Route path={"/home"} element={<Home navigate={navigate} location={location}/>}>
+
+      </Route>
+      <Route path={"/login"} element={<Login navigate={navigate} location={location}/>}>
+      </Route>
+      <Route path={"/register"} element={<Register navigate={navigate} location={location}/>}>
+      </Route>
+
+
+    </Routes>
+  </>
 }
+
+
+
 
 export default App;
